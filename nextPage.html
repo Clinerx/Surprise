@@ -339,26 +339,23 @@
         const audio = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-toggle');
 
-        // Restore playback position and play state across page transitions
-        window.addEventListener('load', () => {
-            const savedTime = localStorage.getItem('musicTime');
-            const isMuted = localStorage.getItem('musicMuted') === 'true';
+        // ALWAYS reset audio position back to 0:00 when landing on/returning to index.html
+        localStorage.setItem('musicTime', '0');
 
-            if (savedTime) {
-                audio.currentTime = parseFloat(savedTime);
-            }
+        window.addEventListener('load', () => {
+            audio.currentTime = 0; // Reset track to 0:00
+            const isMuted = localStorage.getItem('musicMuted') === 'true';
 
             if (!isMuted) {
                 audio.play().then(() => {
                     musicBtn.classList.add('playing');
                 }).catch(() => {
-                    // Handle browser autoplay policy restrictions
                     console.log("Autoplay blocked. Click music button to start.");
                 });
             }
         });
 
-        // Save currentTime prior to leaving page
+        // Save current time when transitioning from index.html to nextpage.html
         window.addEventListener('beforeunload', () => {
             localStorage.setItem('musicTime', audio.currentTime);
         });
