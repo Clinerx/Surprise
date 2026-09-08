@@ -337,16 +337,16 @@
             </div>
 
             <!-- Links -->
-            <nav>
+           <nav>
                 <ul>
                     <li>
-                        <a onclick="showTab('messages')" id="nav-messages" class="letter active">
+                        <a href="nextpage.html" class="letter">
                             <i class="fa-envelope-open-text fa-regular"></i>
                             <span>Love Letter</span>
                         </a>
                     </li>
                     <li>
-                        <a onclick="showTab('memories')" id="nav-memories" class="memories">
+                        <a href="memoryPage.html" class="memories active">
                             <i class="fa-solid fa-images"></i>
                             <span>Our Memories</span>
                         </a>
@@ -364,28 +364,8 @@
    <!-- Main Content Area -->
     <main class="main-content">
 
-        <!-- TAB 1: LOVE LETTER -->
-        <section id="messages" class="tab-content active">
-            <div class="section-header">
-                <h1>My Letter to You</h1>
-                <p>A few words from my heart on our special day.</p>
-            </div>
-            
-            <div class="letter-card">
-                <p>My Dearest Love,</p>
-
-                <p>Happy 3rd Anniversary, my precious one. Looking back at these past three years, I am constantly overwhelmed by the beauty of what we’ve built together. You are my home, my favorite place to be, and the sweetest part of every single day. From the quiet morning glances to the breathless laughter that leaves us wiping away tears, you bring a magical warmth into my world that no one else ever could. Loving you isn't just something I do—it has become a fundamental part of who I am, and my soul feels completely at peace whenever I am near you.</p>
-
-                <p>Life hasn't always been easy on us, and we've walked through our share of heavy storms, quiet tears, and uncertain days. Yet, even in our toughest moments, looking into your eyes has always given me the strength to keep moving forward. The hardships we have survived haven't weakened us—they have forged an unbreakable bond between our hearts, showing me that true love isn't just about the fair-weather days, but about holding on tighter when the wind blows hard. I promise to always be your anchor, to stay strong when you need a shoulder to lean on, and to protect this beautiful connection we share with everything I have.</p>
-
-                <p>As we step into another year hand in hand, I want you to know with absolute certainty that my heart belongs entirely to you. Through every triumph and every trial, through the endless laughter and the gentle moments of silence, I will choose you—over and over again, without a single shadow of doubt. Thank you for loving me so unconditionally, for filling my life with profound joy, and for being my partner in everything. I promise to stand firmly by your side today, tomorrow, and through every lifetime we could ever share.</p>
-
-                <div class="letter-signature">Forever & Completely Yours ❤️</div>
-            </div>
-        </section>
-
         <!-- TAB 2: MEMORIES GALLERY -->
-        <section id="memories" class="tab-content">
+        <section id="memories" class="tab-content active">
             <div class="section-header">
                 <h1>Our Favorite Memories</h1>
                 <p>A collection of moments we've cherished together.</p>
@@ -509,57 +489,43 @@
     </main>
 
     <!-- Interactive Tab Switching Script -->
-    <script>
-        function showTab(tabId) {
-            // Hide all tabs
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
+        <script>
+            const audio = document.getElementById('bg-music');
+            const musicBtn = document.getElementById('music-toggle');
 
-            // Deactivate all navbar links
-            const navLinks = document.querySelectorAll('.sideNav nav a');
-            navLinks.forEach(link => link.classList.remove('active'));
+            window.addEventListener('load', () => {
+                const savedTime = localStorage.getItem('musicTime');
+                const isMuted = localStorage.getItem('musicMuted') === 'true';
 
-            // Activate selected tab and link
-            document.getElementById(tabId).classList.add('active');
-            document.getElementById('nav-' + tabId).classList.add('active');
-        }
+                if (savedTime) {
+                    audio.currentTime = parseFloat(savedTime);
+                }
 
-     const audio = document.getElementById('bg-music');
-        const musicBtn = document.getElementById('music-toggle');
+                if (!isMuted) {
+                    audio.play().then(() => {
+                        musicBtn.classList.add('playing');
+                    }).catch(() => {
+                        console.log("Autoplay blocked. Click music button to start.");
+                    });
+                }
+            });
 
-        window.addEventListener('load', () => {
-            const savedTime = localStorage.getItem('musicTime');
-            const isMuted = localStorage.getItem('musicMuted') === 'true';
+            window.addEventListener('beforeunload', () => {
+                localStorage.setItem('musicTime', audio.currentTime);
+            });
 
-            if (savedTime) {
-                audio.currentTime = parseFloat(savedTime);
-            }
-
-            if (!isMuted) {
-                audio.play().then(() => {
+            musicBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
                     musicBtn.classList.add('playing');
-                }).catch(() => {
-                    console.log("Autoplay blocked. Click music button to start.");
-                });
-            }
-        });
-
-        window.addEventListener('beforeunload', () => {
-            localStorage.setItem('musicTime', audio.currentTime);
-        });
-
-        musicBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-                musicBtn.classList.add('playing');
-                localStorage.setItem('musicMuted', 'false');
-            } else {
-                audio.pause();
-                musicBtn.classList.remove('playing');
-                localStorage.setItem('musicMuted', 'true');
-            }
-        });
-    </script>
+                    localStorage.setItem('musicMuted', 'false');
+                } else {
+                    audio.pause();
+                    musicBtn.classList.remove('playing');
+                    localStorage.setItem('musicMuted', 'true');
+                }
+            });
+        </script>
 
 </body>
 </html>
