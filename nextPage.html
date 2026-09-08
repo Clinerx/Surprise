@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Anniversary Dashboard</title>
+    
+    <!-- Romantic Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #fdfbf7;
+            --sidebar-bg: #ffffff;
+            --primary-rose: #e07a5f;
+            --soft-pink: #f4acb7;
+            --light-rose: #fff0f3;
+            --text-dark: #3d405b;
+            --text-muted: #8d99ae;
+            --border-color: #f2e9e1;
+            --shadow: 0 10px 30px rgba(224, 122, 95, 0.08);
+            --shadow-card: 0 8px 24px rgba(0,0,0,0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* --- Sidebar Styling --- */
+        .sideNav {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem 1.25rem;
+            box-shadow: var(--shadow);
+            z-index: 10;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .couple-header {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .couple-header .heart-icon {
+            color: var(--primary-rose);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        .couple-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: var(--primary-rose);
+            line-height: 1.2;
+        }
+
+        .anniversary-date {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+        }
+
+        .sideNav nav {
+            margin-top: 2rem;
+            flex-grow: 1;
+        }
+
+        .sideNav nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .sideNav nav a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.85rem 1.25rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sideNav nav a i {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .sideNav nav a:hover {
+            background-color: var(--light-rose);
+            color: var(--primary-rose);
+            transform: translateX(4px);
+        }
+
+        .sideNav nav a:hover i {
+            color: var(--primary-rose);
+        }
+
+        .sideNav nav a.active {
+            background-color: var(--primary-rose);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(220, 107, 107, 0.3);
+        }
+
+        .sideNav nav a.active i {
+            color: #ffffff;
+        }
+
+        .sidebar-footer {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* --- Main Content Area --- */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 3rem 4rem;
+            background: radial-gradient(circle at top right, rgba(244, 172, 183, 0.15), transparent 50%);
+            min-height: 100vh;
+        }
+
+        .section-header {
+            margin-bottom: 2.5rem;
+            text-align: left;
+        }
+
+        .section-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* --- Love Letter Card Styling --- */
+        .letter-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .letter-card p {
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .letter-signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: var(--primary-rose);
+            text-align: right;
+            margin-top: 2rem;
+        }
+
+        /* --- Floating Music Control Button --- */
+        .music-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-rose);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(220, 107, 107, 0.4);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 100;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .music-btn.playing i {
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sideNav {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 2rem 1.5rem;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+            .letter-card{
+                text-align: justify;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Music Tag -->
+    <audio id="bg-music" loop>
+        <source src="bensound-love.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Floating Audio Controls Toggle -->
+    <button id="music-toggle" class="music-btn" title="Toggle Music">
+        <i class="fa-solid fa-music"></i>
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sideNav">
+        <div>
+            <!-- Anniversary Header -->
+            <div class="couple-header">
+                <div class="heart-icon"><i class="fa-solid fa-heart"></i></div>
+                <div class="couple-names">Alex & Sam</div>
+                <div class="anniversary-date">October 14, 2023</div>
+            </div>
+
+            <!-- Links -->
+            <nav>
+                <ul>
+                    <li>
+                        <a href="nextpage.html" class="letter active">
+                            <i class="fa-envelope-open-text fa-regular"></i>
+                            <span>Love Letter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="memoryPage.html" class="memories">
+                            <i class="fa-solid fa-images"></i>
+                            <span>Our Memories</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            Forever & Always &infin;
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <section id="messages">
+            <div class="section-header">
+                <h1>My Letter to You</h1>
+                <p>A few words from my heart on our special day.</p>
+            </div>
+            
+            <div class="letter-card">
+                <p>My Dearest Love,</p>
+
+                <!-- PARAGRAPH 1: Love, Laughter & Everyday Joy -->
+                <p>Happy 3rd Anniversary, my precious one. Looking back at these past three years, I am constantly overwhelmed by the beauty of what we’ve built together. You are my home, my favorite place to be, and the sweetest part of every single day. From the quiet morning glances to the breathless laughter that leaves us wiping away tears, you bring a magical warmth into my world that no one else ever could. Loving you isn't just something I do—it has become a fundamental part of who I am, and my soul feels completely at peace whenever I am near you.</p>
+
+                <!-- PARAGRAPH 2: Facing Hardships Together & Choosing Strength -->
+                <p>Life hasn't always been easy on us, and we've walked through our share of heavy storms, quiet tears, and uncertain days. Yet, even in our toughest moments, looking into your eyes has always given me the strength to keep moving forward. The hardships we have survived haven't weakened us—they have forged an unbreakable bond between our hearts, showing me that true love isn't just about the fair-weather days, but about holding on tighter when the wind blows hard. I promise to always be your anchor, to stay strong when you need a shoulder to lean on, and to protect this beautiful connection we share with everything I have.</p>
+
+                <!-- PARAGRAPH 3: Unwavering Promise & Forever Commitment -->
+                <p>As we step into another year hand in hand, I want you to know with absolute certainty that my heart belongs entirely to you. Through every triumph and every trial, through the endless laughter and the gentle moments of silence, I will choose you—over and over again, without a single shadow of doubt. Thank you for loving me so unconditionally, for filling my life with profound joy, and for being my partner in everything. I promise to stand firmly by your side today, tomorrow, and through every lifetime we could ever share.</p>
+
+                <div class="letter-signature">Forever & Completely Yours ❤️</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Music Persistence & Control Script -->
+    <script>
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-toggle');
+
+        // Restore playback position and play state across page transitions
+        window.addEventListener('load', () => {
+            const savedTime = localStorage.getItem('musicTime');
+            const isMuted = localStorage.getItem('musicMuted') === 'true';
+
+            if (savedTime) {
+                audio.currentTime = parseFloat(savedTime);
+            }
+
+            if (!isMuted) {
+                audio.play().then(() => {
+                    musicBtn.classList.add('playing');
+                }).catch(() => {
+                    // Handle browser autoplay policy restrictions
+                    console.log("Autoplay blocked. Click music button to start.");
+                });
+            }
+        });
+
+        // Save currentTime prior to leaving page
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('musicTime', audio.currentTime);
+        });
+
+        // Toggle music play/pause state
+        musicBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                musicBtn.classList.add('playing');
+                localStorage.setItem('musicMuted', 'false');
+            } else {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+                localStorage.setItem('musicMuted', 'true');
+            }
+        });
+    </script>
+
+</body>
+</html>
